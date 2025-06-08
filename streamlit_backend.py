@@ -26,7 +26,8 @@ if not PLAYER_POOL:
         for i in range(200)
     ])
 
-PLAYER_POOL.sort(key=lambda x: x['o_rank'])
+if PLAYER_POOL:
+    PLAYER_POOL.sort(key=lambda x: x.get('o_rank', float('inf')))
 
 st.set_page_config(page_title="Fantasy Draft Simulator", layout="wide")
 st.title("🏈 Fantasy Football Draft Simulator")
@@ -46,7 +47,8 @@ if uploaded_file:
     df = pd.read_csv(uploaded_file)
     PLAYER_POOL.clear()
     PLAYER_POOL.extend(df.to_dict(orient="records"))
-    PLAYER_POOL.sort(key=lambda x: x['o_rank'])
+    if PLAYER_POOL:
+    PLAYER_POOL.sort(key=lambda x: x.get('o_rank', float('inf')))
     st.sidebar.success("Custom player pool loaded!")
 
 st.header("Interactive Draft Mode")
